@@ -50,7 +50,7 @@ const questions = [
   "Did I approach the process                        with openness and honesty?",
   "Did I foster collaboration and inclusivity?",
   "Did the project broaden public perspectives and expand their world?",
-  "                                       Did my design create social value?"
+  "Did my design create social value?"
 ];
 
 function preload() {
@@ -59,7 +59,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1280, 720);
+  createCanvas(windowWidth, windowHeight);
   textFont(font);
   textAlign(CENTER, CENTER);
 
@@ -125,40 +125,49 @@ function applyShakeEffect() {
 }
 
 function drawQuestionBox() {
-  fill(255);
-  stroke(0);
-  strokeWeight(2);
+  fill(255); // 질문 상자 배경 색상
+  stroke(0); // 테두리 색상
+  strokeWeight(2); // 테두리 두께
   rect(width / 4, height / 4, width / 2, height / 2, 20);
 
-  fill(0);
+  fill(0); // 텍스트 색상
+
   if (questionIndex === questions.length - 1) {
-    textSize(30);
-    strokeWeight(4);
+    textSize(30); // 마지막 질문 텍스트는 더 크게
   } else {
-    textSize(25);
-    strokeWeight(2);
+    textSize(25); // 기본 텍스트 크기
   }
 
-  let lines = splitByWords(questions[questionIndex], 50);
+  textStyle(NORMAL); // 모든 질문 텍스트를 동일한 두께로 설정
+
+  let lines = splitByWords(questions[questionIndex], 50); // 현재 질문을 단어별로 나누기
   for (let i = 0; i < lines.length; i++) {
-    text(lines[i], width / 2, height / 4 + 120 + i * 30 + 10);
+    text(lines[i], width / 2, height / 4 + 120 + i * 30 + 10); // 질문 텍스트 위치 설정
   }
 
   if (questionIndex === questions.length - 1) {
-    fill(200, 200, 255);
-    rect(width / 2 - 120, height / 2 + 40, 240, 60);
-    fill(0);
+    let buttonWidth = 240; // 마지막 Yes 버튼 더 크게
+    let buttonHeight = 60;
+
+    fill(200, 200, 255); // Yes 버튼 배경색
+    rect(width / 2 - buttonWidth / 2, height / 2 + 40, buttonWidth, buttonHeight); // Yes 버튼 위치
+    fill(0); // Yes 버튼 텍스트 색상
     textSize(25);
-    text("Yes", width / 2, height / 2 + 70);
+    text("Yes", width / 2, height / 2 + 70); // Yes 텍스트 위치
   } else {
-    fill(200, 200, 255);
-    rect(width / 2 - 100, height / 2 + 40, 80, 40);
-    fill(0);
+    let buttonWidth = 80; // 일반 버튼 크기
+    let buttonHeight = 40;
+
+    // Yes 버튼
+    fill(200, 200, 255); // Yes 버튼 배경색
+    rect(width / 2 - 100, height / 2 + 40, buttonWidth, buttonHeight); // Yes 버튼 위치
+    fill(0); // Yes 버튼 텍스트 색상
     text("Yes", width / 2 - 60, height / 2 + 60);
 
-    fill(255, 200, 200);
-    rect(width / 2 + 20, height / 2 + 40, 80, 40);
-    fill(0);
+    // No 버튼
+    fill(255, 200, 200); // No 버튼 배경색
+    rect(width / 2 + 20, height / 2 + 40, buttonWidth, buttonHeight); // No 버튼 위치
+    fill(0); // No 버튼 텍스트 색상
     text("No", width / 2 + 60, height / 2 + 60);
   }
 }
