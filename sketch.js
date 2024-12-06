@@ -59,16 +59,8 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  textFont(font);
-  textAlign(CENTER, CENTER);
-
-  img = originalImg.get(); // 현재 상태 이미지 초기화
-  scatterImage(); // 초기 이미지 흩어짐 적용
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  adjustCanvas();
+  window.addEventListener("resize", adjustCanvas); // 창 크기 변경 이벤트
 }
 
 function draw() {
@@ -83,7 +75,6 @@ function draw() {
     box.display();
   }
 
-  // 질문 상자 그리기: isFrozen 상태에서도 표시 유지
   if (showQuestionBox || isFrozen) {
     drawQuestionBox();
   }
@@ -94,6 +85,37 @@ function draw() {
       createErrorBox(); // 에러 박스 생성
     }
   }
+}
+
+// 창 크기와 방향을 조정하는 함수
+function adjustCanvas() {
+  let w = window.innerWidth;
+  let h = window.innerHeight;
+
+  // 세로 모드일 경우 화면 회전을 강제
+  if (h > w) {
+    document.body.style.transform = "rotate(90deg)";
+    document.body.style.transformOrigin = "center center";
+    document.body.style.width = `${h}px`;
+    document.body.style.height = `${w}px`;
+  } else {
+    document.body.style.transform = "rotate(0deg)";
+    document.body.style.width = `${w}px`;
+    document.body.style.height = `${h}px`;
+  }
+
+  resizeCanvas(window.innerWidth, window.innerHeight);
+
+  textFont(font);
+  textAlign(CENTER, CENTER);
+
+  img = originalImg.get(); // 현재 상태 이미지 초기화
+  scatterImage(); // 초기 이미지 흩어짐 적용
+}
+
+// 창 크기 변경 시 호출
+function windowResized() {
+  adjustCanvas();
 }
 
 function scatterImage() {
