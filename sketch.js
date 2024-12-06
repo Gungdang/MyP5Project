@@ -67,6 +67,10 @@ function setup() {
   scatterImage(); // 초기 이미지 흩어짐 적용
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
 function draw() {
   if (isShaking) {
     applyShakeEffect(); // 흔들림 효과
